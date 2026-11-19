@@ -1,0 +1,243 @@
+/* Оформление повторяет игру: тетрадь в клетку, чернильные обводки, четыре игровых цвета. Значения из lovi-cvet.html. */
+:root {
+  --bg: #f7f8fc;
+  --grid: #dfe5f5;
+  --ink: #1f2a9c;
+  --text: #1b1f4a;
+  --muted: #4a5285;
+  --card: #ffffff;
+  --red: #ef4444;
+  --blue: #3b82f6;
+  --green: #22c55e;
+  --yellow: #facc15;
+  --pink: #f472b6;
+  --gray: #4b5563;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1226;
+    --grid: #1c2147;
+    --ink: #dfe4ff;
+    --text: #e6e9ff;
+    --muted: #a9b0e0;
+    --card: #171b3a;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--text);
+  font-family: ui-rounded, "SF Pro Rounded", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.container {
+  width: min(100% - 2rem, 760px);
+  margin: 0 auto;
+}
+
+a {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration-thickness: 0.1em;
+  text-underline-offset: 0.18em;
+}
+
+a:focus-visible {
+  outline: 3px solid var(--yellow);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Шапка: как HUD игры, карточка с толстой обводкой */
+.site-header { padding: 1rem 0 0; }
+
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1.25rem;
+  padding: 0.6rem 1rem;
+  background: var(--card);
+  border: 3px solid var(--ink);
+  border-radius: 12px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--ink);
+  font-size: 1.15rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.brand svg { flex: none; }
+
+.bar nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  font-size: 0.95rem;
+}
+
+.bar nav a { text-decoration: none; }
+.bar nav a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 0.15em; }
+
+.lang { font-size: 0.9rem; color: var(--muted); }
+.lang a[aria-current="page"] { text-decoration: none; color: var(--muted); }
+
+main { padding: 2rem 0 1rem; }
+
+.card {
+  background: var(--card);
+  border: 3px solid var(--ink);
+  border-radius: 16px;
+  padding: clamp(1.25rem, 4vw, 2rem);
+}
+
+.card + .card { margin-top: 1.25rem; }
+
+h1, h2, h3 { color: var(--ink); line-height: 1.2; }
+h1 { font-size: clamp(2.2rem, 7vw, 3.2rem); margin: 0 0 0.5rem; letter-spacing: -0.01em; overflow-wrap: break-word; hyphens: auto; }
+/* «Политика конфиденциальности» на 390 pt не помещалась в одну строку и давала горизонтальную прокрутку */
+article.card h1 { font-size: clamp(1.75rem, 6vw, 2.6rem); }
+h2 { font-size: 1.6rem; margin: 0 0 1rem; }
+h3 { font-size: 1.15rem; margin: 1.75rem 0 0.5rem; }
+
+p { margin: 0 0 1rem; }
+ul, ol { margin: 0 0 1rem; padding-left: 1.3rem; }
+li + li { margin-top: 0.35rem; }
+
+.lead { font-size: 1.15rem; color: var(--muted); max-width: 34em; }
+.muted { color: var(--muted); }
+.last-updated { color: var(--muted); font-size: 0.95rem; }
+
+/* Главная */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.hero svg { width: clamp(140px, 30vw, 220px); height: auto; }
+
+@media (max-width: 560px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero svg { order: -1; justify-self: center; }
+}
+
+.pill {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.55rem 1.4rem;
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  background: var(--yellow);
+  color: #1b1b3a;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+/* Легенда кружков */
+.legend { list-style: none; padding: 0; margin: 0 0 1rem; }
+.legend li { display: flex; gap: 0.75rem; align-items: flex-start; }
+.legend li + li { margin-top: 0.6rem; }
+
+.dot {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  margin-top: 0.05rem;
+  border: 2.5px solid var(--ink);
+  border-radius: 50%;
+  font-size: 0.85rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.dot.red { background: var(--red); }
+.dot.blue { background: var(--blue); }
+.dot.green { background: var(--green); }
+.dot.yellow { background: var(--yellow); }
+.dot.white { background: #ffffff; color: #b45309; }
+.dot.pink { background: var(--pink); color: #ffffff; }
+.dot.gray { background: var(--gray); color: #ffffff; }
+
+.dots { display: inline-flex; gap: 0.25rem; flex: none; }
+
+.modes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.mode {
+  padding: 1rem 1.1rem;
+  border: 3px solid var(--ink);
+  border-radius: 14px;
+}
+
+.mode h3 { margin-top: 0; }
+.mode p { margin: 0; }
+
+/* Политика и поддержка */
+dl { margin: 0 0 1rem; }
+dt { font-weight: 700; color: var(--ink); margin-top: 0.9rem; }
+dd { margin: 0.2rem 0 0; }
+
+.summary {
+  margin: 0 0 1.5rem;
+  padding: 1rem 1.1rem;
+  border: 3px dashed var(--ink);
+  border-radius: 14px;
+}
+
+.summary ul { margin: 0; }
+
+.contact {
+  font-size: 1.1rem;
+  padding: 1rem 1.1rem;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--yellow) 22%, var(--card));
+  border: 3px solid var(--ink);
+}
+
+.contact p { margin: 0; }
+.contact p + p { margin-top: 0.4rem; }
+
+.site-footer {
+  padding: 1rem 0 2.5rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.site-footer .container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  justify-content: space-between;
+}
+
+.site-footer p { margin: 0; }
+
+.contact + h2 { margin-top: 2rem; }
